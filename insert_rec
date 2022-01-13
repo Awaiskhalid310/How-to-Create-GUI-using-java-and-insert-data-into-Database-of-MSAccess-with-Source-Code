@@ -1,0 +1,94 @@
+package java_DB;
+import javax.swing.*; 
+import java.sql.*;
+import java.awt.event.*;  
+public class  insert_rec implements ActionListener{  
+    JLabel l1,l2;  
+	JTextField tf1,tf2;  
+    JButton b1; 
+ 
+  public  insert_rec(){  
+    	 
+        JFrame f= new JFrame();  
+        l1=new JLabel("Name:");  
+        l1.setBounds(50,25,150,20);
+        tf1=new JTextField();  
+        tf1.setBounds(50,50,150,20);
+        l2=new JLabel("Age:");  
+        l2.setBounds(50,75,150,20); 
+ 
+        tf2=new JTextField();  
+        tf2.setBounds(50,100,150,20);  
+        
+        b1=new JButton("Submit");  
+        b1.setBounds(60,150,150,50);  
+
+        b1.addActionListener(this);  
+  
+        f.add(tf1);f.add(tf2);f.add(b1); f.add(l1); f.add(l2) ;  
+        f.setSize(300,300);  
+        f.setLayout(null);  
+        f.setVisible(true); 
+    
+     
+    
+       
+    
+    } 
+    
+    
+public static void main(String[] args) {  
+    new insert_rec();
+ 
+}
+
+@Override
+public void actionPerformed(ActionEvent e) {
+	// TODO Auto-generated method stub
+	String p = e.getActionCommand();
+	System.out.println(p);
+	if(p.equalsIgnoreCase("Submit")) {
+		save();
+	}
+}
+ /**
+ * 
+ */
+public void save() {
+	   try {
+	    	//loading driver
+	    	 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	    	 //connection url - establishing Connection
+	         Connection con= DriverManager.getConnection("jdbc:ucanaccess://C:\\Users\\Awais\\Documents\\StudentTable.accdb");
+	         System.out.println("Connected Successfully");
+	         //create statement
+	         Statement st = con.createStatement();
+	        // String sql = "SELECT * FROM StudentTable";
+	         String sql = "INSERT INTO StudentTable (NameOfStudent,Age) VALUES ('"+tf1.getText()+"','"+tf2.getText()+"')";
+	         st.executeUpdate(sql);
+	         //String sql = "UPDATE StudentTable SET NameOfStudent = 'ALI' WHERE ID = 3";
+	         //String sql = "DELETE FROM StudentTable WHERE ID = 4";
+	         //execute query
+	        // ResultSet rs = st.executeQuery(sql); //for select
+	        // st.execute(sql);//for insert, update and delete
+	         //process results
+	       /*  while(rs.next()) {
+	        	 String id = rs.getString("ID");
+	        	 String name = rs.getString("NameOfStudent");
+	        	 String cgpa = rs.getString("CGPAOfStudent");
+	        	 String degree = rs.getString("DegreeOfStudent");
+	        	 System.out.println(id + " " + name + " " + cgpa + " " + degree);
+	         }*/
+
+	    } catch (Exception sqlEx) {
+
+	    	System.out.println(sqlEx);
+
+	    	}     
+
+	   } //end main
+	
+}
+
+//end class
+ 
